@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Numero3.EntityFramework.Demo.DatabaseContext;
 using Numero3.EntityFramework.Demo.DomainModel;
-using Numero3.EntityFramework.Interfaces;
+using DbContextScope.Core;
 
 namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 {
@@ -10,16 +10,16 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 	{
 		private readonly IDbContextScopeFactory _dbContextScopeFactory;
 
-		public UserEmailService(IDbContextScopeFactory dbContextScopeFactory)
+		public UserEmailService(IDbContextScopeFactory factory)
 		{
-			if (dbContextScopeFactory == null) throw new ArgumentNullException("dbContextScopeFactory");
-			_dbContextScopeFactory = dbContextScopeFactory;
+            if (factory == null) throw new ArgumentNullException("factory");
+            _dbContextScopeFactory = factory;
 		}
 
 		public void SendWelcomeEmail(Guid userId)
 		{
 			/*
-			 * Demo of forcing the creation of a new DbContextScope
+			 * Demo of forcing the creation of a new IDbContextScope
 			 * to ensure that changes made to the model in this service 
 			 * method are persisted even if that method happens to get
 			 * called within the scope of a wider business transaction
@@ -44,12 +44,12 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 			// Otherwise, we would risk spamming our users with repeated Welcome
 			// emails. 
 
-			// Force the creation of a new DbContextScope so that the changes we make here are
+			// Force the creation of a new IDbContextScope so that the changes we make here are
 			// guaranteed to get persisted regardless of what happens after this method has completed.
-			using (var dbContextScope = _dbContextScopeFactory.Create(DbContextScopeOption.ForceCreateNew))
+			using (var IDbContextScope = _dbContextScopeFactory.Create(DbContextScopeOption.ForceCreateNew))
 			{
-				var dbContext = dbContextScope.DbContexts.Get<UserManagementDbContext>();
-				var user = dbContext.Users.Find(userId);
+				var IDbContext = IDbContextScope.DbContexts.Get<UserManagementDbContext>();
+				var user = IDbContext.Users.Find(userId);
 
 				if (user == null)
 					throw new ArgumentException(String.Format("Invalid userId provided: {0}. Couldn't find a User with this ID.", userId));
@@ -60,12 +60,12 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 					user.WelcomeEmailSent = true;
 				}
 
-				dbContextScope.SaveChanges();
+				IDbContextScope.SaveChanges();
 
-				// When you force the creation of a new DbContextScope, you must force the parent
+				// When you force the creation of a new IDbContextScope, you must force the parent
 				// scope (if any) to reload the entities you've modified here. Otherwise, the method calling
 				// you might not be able to see the changes you made here.
-				dbContextScope.RefreshEntitiesInParentScope(new List<User> {user});
+				IDbContextScope.RefreshEntitiesInParentScope(new List<User> {user});
 			}
 		}
 

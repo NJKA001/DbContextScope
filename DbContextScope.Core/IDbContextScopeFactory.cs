@@ -8,45 +8,45 @@
 using System;
 using System.Data;
 
-namespace Numero3.EntityFramework.Interfaces
+namespace DbContextScope.Core
 {
     /// <summary>
-    /// Convenience methods to create a new ambient DbContextScope. This is the prefered method
-    /// to create a DbContextScope.
+    /// Convenience methods to create a new ambient IDbContextScope. This is the prefered method
+    /// to create a IDbContextScope.
     /// </summary>
     public interface IDbContextScopeFactory
     {
         /// <summary>
-        /// Creates a new DbContextScope.
+        /// Creates a new IDbContextScope.
         /// 
         /// By default, the new scope will join the existing ambient scope. This
-        /// is what you want in most cases. This ensures that the same DbContext instances
+        /// is what you want in most cases. This ensures that the same IDbContext instances
         /// are used by all services methods called within the scope of a business transaction.
         /// 
         /// Set 'joiningOption' to 'ForceCreateNew' if you want to ignore the ambient scope
-        /// and force the creation of new DbContext instances within that scope. Using 'ForceCreateNew'
+        /// and force the creation of new IDbContext instances within that scope. Using 'ForceCreateNew'
         /// is an advanced feature that should be used with great care and only if you fully understand the
         /// implications of doing this.
         /// </summary>
         IDbContextScope Create(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting);
 
         /// <summary>
-        /// Creates a new DbContextScope for read-only queries.
+        /// Creates a new IDbContextScope for read-only queries.
         /// 
         /// By default, the new scope will join the existing ambient scope. This
-        /// is what you want in most cases. This ensures that the same DbContext instances
+        /// is what you want in most cases. This ensures that the same IDbContext instances
         /// are used by all services methods called within the scope of a business transaction.
         /// 
         /// Set 'joiningOption' to 'ForceCreateNew' if you want to ignore the ambient scope
-        /// and force the creation of new DbContext instances within that scope. Using 'ForceCreateNew'
+        /// and force the creation of new IDbContext instances within that scope. Using 'ForceCreateNew'
         /// is an advanced feature that should be used with great care and only if you fully understand the
         /// implications of doing this.
         /// </summary>
-        IDbContextReadOnlyScope CreateReadOnly(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting);
+        IDataContextReadOnlyScope CreateReadOnly(DbContextScopeOption joiningOption = DbContextScopeOption.JoinExisting);
 
         /// <summary>
-        /// Forces the creation of a new ambient DbContextScope (i.e. does not
-        /// join the ambient scope if there is one) and wraps all DbContext instances
+        /// Forces the creation of a new ambient IDbContextScope (i.e. does not
+        /// join the ambient scope if there is one) and wraps all IDbContext instances
         /// created within that scope in an explicit database transaction with 
         /// the provided isolation level. 
         /// 
@@ -61,8 +61,8 @@ namespace Numero3.EntityFramework.Interfaces
         IDbContextScope CreateWithTransaction(IsolationLevel isolationLevel);
 
         /// <summary>
-        /// Forces the creation of a new ambient read-only DbContextScope (i.e. does not
-        /// join the ambient scope if there is one) and wraps all DbContext instances
+        /// Forces the creation of a new ambient read-only IDbContextScope (i.e. does not
+        /// join the ambient scope if there is one) and wraps all IDbContext instances
         /// created within that scope in an explicit database transaction with 
         /// the provided isolation level. 
         /// 
@@ -74,16 +74,16 @@ namespace Numero3.EntityFramework.Interfaces
         /// This is an advanced feature that you should use very carefully
         /// and only if you fully understand the implications of doing this.
         /// </summary>
-        IDbContextReadOnlyScope CreateReadOnlyWithTransaction(IsolationLevel isolationLevel);
+        IDataContextReadOnlyScope CreateReadOnlyWithTransaction(IsolationLevel isolationLevel);
 
         /// <summary>
-        /// Temporarily suppresses the ambient DbContextScope. 
+        /// Temporarily suppresses the ambient IDbContextScope. 
         /// 
-        /// Always use this if you need to  kick off parallel tasks within a DbContextScope. 
+        /// Always use this if you need to  kick off parallel tasks within a IDbContextScope. 
         /// This will prevent the parallel tasks from using the current ambient scope. If you
-        /// were to kick off parallel tasks within a DbContextScope without suppressing the ambient
-        /// context first, all the parallel tasks would end up using the same ambient DbContextScope, which 
-        /// would result in multiple threads accesssing the same DbContext instances at the same 
+        /// were to kick off parallel tasks within a IDbContextScope without suppressing the ambient
+        /// context first, all the parallel tasks would end up using the same ambient IDbContextScope, which 
+        /// would result in multiple threads accesssing the same IDbContext instances at the same 
         /// time.
         /// </summary>
         IDisposable SuppressAmbientContext();

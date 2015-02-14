@@ -37,15 +37,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -65,16 +59,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DbContextScope.Interfaces.licenseheader" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EntityFramework.Implementation\EntityFramework.Implementation.csproj">
-      <Project>{BCD94CFB-8286-4BD1-8D88-C34C0C48C9EC}</Project>
-      <Name>EntityFramework.Implementation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EntityFramework.Interfaces\EntityFramework.Interfaces.csproj">
+    <ProjectReference Include="..\DbContextScope.Core\DbContextScope.Core.csproj">
       <Project>{90d4492b-abd8-4fe6-9f15-44acaffd8828}</Project>
-      <Name>EntityFramework.Interfaces</Name>
+      <Name>DbContextScope.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbContextScope.EntityFramework.Implementation\DbContextScope.EntityFramework.Implementation.csproj">
+      <Project>{bcd94cfb-8286-4bd1-8d88-c34c0c48c9ec}</Project>
+      <Name>DbContextScope.EntityFramework.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DbContextScope.Implementation\DbContextScope.Implementation.csproj">
+      <Project>{C61ED263-AAC6-47B8-A83F-CD97A4547AF3}</Project>
+      <Name>DbContextScope.Implementation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

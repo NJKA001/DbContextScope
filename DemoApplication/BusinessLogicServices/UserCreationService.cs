@@ -2,7 +2,7 @@
 using Numero3.EntityFramework.Demo.CommandModel;
 using Numero3.EntityFramework.Demo.DomainModel;
 using Numero3.EntityFramework.Demo.Repositories;
-using Numero3.EntityFramework.Interfaces;
+using DbContextScope.Core;
 
 namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 {
@@ -16,7 +16,7 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 
 		public UserCreationService(IDbContextScopeFactory dbContextScopeFactory, IUserRepository userRepository)
 		{
-			if (dbContextScopeFactory == null) throw new ArgumentNullException("dbContextScopeFactory");
+			if (dbContextScopeFactory == null) throw new ArgumentNullException("IDbContextScopeFactory");
 			if (userRepository == null) throw new ArgumentNullException("userRepository");
 			_dbContextScopeFactory = dbContextScopeFactory;
 			_userRepository = userRepository;
@@ -30,7 +30,7 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 			userToCreate.Validate();
 
 			/*
-			 * Typical usage of DbContextScope for a read-write business transaction. 
+			 * Typical usage of IDbContextScope for a read-write business transaction. 
 			 * It's as simple as it looks.
 			 */
 			using (var dbContextScope = _dbContextScopeFactory.Create())
@@ -54,7 +54,7 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 		public void CreateListOfUsers(params UserCreationSpec[] usersToCreate)
 		{
 			/*
-			 * Example of DbContextScope nesting in action. 
+			 * Example of IDbContextScope nesting in action. 
 			 * 
 			 * We already have a service method - CreateUser() - that knows how to create a new user
 			 * and implements all the business rules around the creation of a new user 
@@ -70,10 +70,10 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 			 * or none of them will. It would be disastrous to have a partial failure here
 			 * and end up with some users but not all having been created.
 			 * 
-			 * DbContextScope makes this trivial to implement. 
+			 * IDbContextScope makes this trivial to implement. 
 			 * 
-			 * The inner DbContextScope instance that the CreateUser() method creates
-			 * will join our top-level scope. This ensures that the same DbContext instance is
+			 * The inner IDbContextScope instance that the CreateUser() method creates
+			 * will join our top-level scope. This ensures that the same IDbContext instance is
 			 * going to be used throughout this business transaction.
 			 * 
 			 */
@@ -93,7 +93,7 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 		public void CreateListOfUsersWithIntentionalFailure(params UserCreationSpec[] usersToCreate)
 		{
 			/*
-			 * Here, we'll verify that inner DbContextScopes really join the parent scope and 
+			 * Here, we'll verify that inner IDbContextScopes really join the parent scope and 
 			 * don't persist their changes until the parent scope completes successfully. 
 			 */
 

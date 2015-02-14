@@ -7,17 +7,17 @@
  */
 using System;
 
-namespace Numero3.EntityFramework.Interfaces
+namespace DbContextScope.Core
 {
     /// <summary>
-    /// A read-only DbContextScope. Refer to the comments for IDbContextScope
+    /// A read-only IDbContextScope. Refer to the comments for IDbContextScope
     /// for more details.
     /// </summary>
-    public interface IDbContextReadOnlyScope : IDisposable
+    public interface IDataContextReadOnlyScope : IDisposable
     {
         /// <summary>
-        /// The DbContext instances that this DbContextScope manages.
+        /// The IDbContext instances that this IDbContextScope manages.
         /// </summary>
-        IDbContextCollection DbContexts { get; }
+        IDbContextCollection DataContexts { get; }
     }
 }

@@ -1,23 +1,16 @@
-﻿/* 
- * Copyright (C) 2014 Mehdi El Gueddari
- * http://mehdi.me
- *
- * This software may be modified and distributed under the terms
- * of the MIT license.  See the LICENSE file for details.
- */
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DbContextScope.Interfaces")]
+[assembly: AssemblyTitle("DataContextScope.Implementation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DbContextScope.Interfaces")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyProduct("DataContextScope.Implementation")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -27,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1d02b1b7-c659-4eea-9344-d258813ce5b2")]
+[assembly: Guid("698A42F1-2917-4681-9300-EABD043A8606")]
 
 // Version information for an assembly consists of the following four values:
 //

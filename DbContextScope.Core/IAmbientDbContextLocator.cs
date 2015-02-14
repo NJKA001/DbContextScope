@@ -5,21 +5,20 @@
  * This software may be modified and distributed under the terms
  * of the MIT license.  See the LICENSE file for details.
  */
-using System.Data.Entity;
-
-namespace Numero3.EntityFramework.Interfaces
+ 
+namespace DbContextScope.Core
 {
     /// <summary>
-    /// Convenience methods to retrieve ambient DbContext instances. 
+    /// Convenience methods to retrieve ambient IDbContext instances. 
     /// </summary>
     public interface IAmbientDbContextLocator
     {
         /// <summary>
-        /// If called within the scope of a DbContextScope, gets or creates 
-        /// the ambient DbContext instance for the provided DbContext type. 
+        /// If called within the scope of a IDbContextScope, gets or creates 
+        /// the ambient IDbContext instance for the provided IDbContext type. 
         /// 
         /// Otherwise returns null. 
         /// </summary>
-        TDbContext Get<TDbContext>() where TDbContext : DbContext;
+        TIDbContext Get<TIDbContext>() where TIDbContext : class, IDbContext;
     }
 }

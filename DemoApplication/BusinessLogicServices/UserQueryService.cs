@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Numero3.EntityFramework.Demo.DatabaseContext;
 using Numero3.EntityFramework.Demo.DomainModel;
 using Numero3.EntityFramework.Demo.Repositories;
-using Numero3.EntityFramework.Interfaces;
+using DbContextScope.Core;
 
 namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 {
@@ -18,28 +18,28 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 		private readonly IDbContextScopeFactory _dbContextScopeFactory;
 		private readonly IUserRepository _userRepository;
 
-		public UserQueryService(IDbContextScopeFactory dbContextScopeFactory, IUserRepository userRepository)
+        public UserQueryService(IDbContextScopeFactory factory, IUserRepository userRepository)
 		{
-			if (dbContextScopeFactory == null) throw new ArgumentNullException("dbContextScopeFactory");
+            if (factory == null) throw new ArgumentNullException("factory");
 			if (userRepository == null) throw new ArgumentNullException("userRepository");
-			_dbContextScopeFactory = dbContextScopeFactory;
+            _dbContextScopeFactory = factory;
 			_userRepository = userRepository;
 		}
 
 		public User GetUser(Guid userId)
 		{
 			/*
-			 * An example of using DbContextScope for read-only queries. 
-			 * Here, we access the Entity Framework DbContext directly from 
+			 * An example of using IDbContextScope for read-only queries. 
+			 * Here, we access the Entity Framework IDbContext directly from 
 			 * the business logic service class.
 			 * 
 			 * Calling SaveChanges() is not necessary here (and in fact not 
 			 * possible) since we created a read-only scope.
 			 */
-			using (var dbContextScope = _dbContextScopeFactory.CreateReadOnly())
+			using (var contextScope = _dbContextScopeFactory.CreateReadOnly())
 			{
-				var dbContext = dbContextScope.DbContexts.Get<UserManagementDbContext>();
-				var user = dbContext.Users.Find(userId);
+				var context = contextScope.DataContexts.Get<UserManagementDbContext>();
+                var user = context.Users.Find(userId);
 
 				if (user == null)
 					throw new ArgumentException(String.Format("Invalid value provided for userId: [{0}]. Couldn't find a user with this ID.", userId));
@@ -50,10 +50,10 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 
 		public IEnumerable<User> GetUsers(params Guid[] userIds)
 		{
-			using (var dbContextScope = _dbContextScopeFactory.CreateReadOnly())
+            using (var contextScope = _dbContextScopeFactory.CreateReadOnly())
 			{
-				var dbContext = dbContextScope.DbContexts.Get<UserManagementDbContext>();
-				return dbContext.Users.Where(u => userIds.Contains(u.Id)).ToList();
+                var context = contextScope.DataContexts.Get<UserManagementDbContext>();
+                return context.Users.Where(u => userIds.Contains(u.Id)).ToList();
 			}
 		}
 
@@ -61,17 +61,17 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 		{
 			/*
 			 * Same as GetUsers() but using a repository layer instead of accessing the 
-			 * EF DbContext directly.
+			 * EF IDbContext directly.
 			 * 
-			 * Note how we don't have to worry about knowing what type of DbContext the 
-			 * repository will need, about creating the DbContext instance or about passing
-			 * DbContext instances around. 
+			 * Note how we don't have to worry about knowing what type of IDbContext the 
+			 * repository will need, about creating the IDbContext instance or about passing
+			 * IDbContext instances around. 
 			 * 
-			 * The DbContextScope will take care of creating the necessary DbContext instances
+			 * The IDbContextScope will take care of creating the necessary IDbContext instances
 			 * and making them available as ambient contexts for our repository layer to use.
-			 * It will also guarantee that only one instance of any given DbContext type exists
+			 * It will also guarantee that only one instance of any given IDbContext type exists
 			 * within its scope ensuring that all persistent entities managed within that scope
-			 * are attached to the same DbContext. 
+			 * are attached to the same IDbContext. 
 			 */
 			using (_dbContextScopeFactory.CreateReadOnly())
 			{
@@ -87,10 +87,10 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 		public async Task<IList<User>> GetTwoUsersAsync(Guid userId1, Guid userId2)
 		{
 			/*
-			 * A very contrived example of ambient DbContextScope within an async flow.
+			 * A very contrived example of ambient IDbContextScope within an async flow.
 			 * 
 			 * Note that the ConfigureAwait(false) calls here aren't strictly necessary 
-			 * and are unrelated to DbContextScope. You can remove them if you want and 
+			 * and are unrelated to IDbContextScope. You can remove them if you want and 
 			 * the code will run in the same way. It is however good practice to configure
 			 * all your awaitables in library code to not continue 
 			 * on the captured synchronization context. It avoids having to pay the overhead 
@@ -111,13 +111,13 @@ namespace Numero3.EntityFramework.Demo.BusinessLogicServices
 
 				// We're now in the continuation of the first async task. This is most
 				// likely executing in a thread from the ThreadPool, i.e. in a different
-				// thread that the one where we created our DbContextScope. Our ambient
-				// DbContextScope is still available here however, which allows the call 
+				// thread that the one where we created our IDbContextScope. Our ambient
+				// IDbContextScope is still available here however, which allows the call 
 				// below to succeed.
 
 				var user2 = await _userRepository.GetAsync(userId2).ConfigureAwait(false);
 
-				// In other words, DbContextScope works with async execution flow as you'd expect: 
+				// In other words, IDbContextScope works with async execution flow as you'd expect: 
  				// It Just Works.  
 
 				return new List<User> {user1, user2}.Where(u => u != null).ToList();

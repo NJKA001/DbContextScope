@@ -6,16 +6,17 @@
  * of the MIT license.  See the LICENSE file for details.
  */
 using System;
-
-namespace Numero3.EntityFramework.Implementation
+ 
+namespace DbContextScope.EntityFramework
 {
-    public class AmbientContextSuppressor : IDisposable
+    internal class AmbientContextSuppressor : IDisposable
     {
         private DbContextScope _savedScope;
         private bool _disposed;
 
         public AmbientContextSuppressor()
         {
+
             _savedScope = DbContextScope.GetAmbientScope();
 
             // We're hiding the ambient scope but not removing its instance

@@ -1,16 +1,23 @@
-﻿using System.Reflection;
+﻿/* 
+ * Copyright (C) 2014 Mehdi El Gueddari
+ * http://mehdi.me
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license.  See the LICENSE file for details.
+ */
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("IDbContextScope")]
+[assembly: AssemblyTitle("EntityFramework.Implementation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("IDbContextScope")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyProduct("EntityFramework.Implementation")]
+[assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +27,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("268b6a6d-90fa-4bca-ab00-0354003eb9b9")]
+[assembly: Guid("63F5B798-1B95-4EB3-B619-684F9B418FB4")]
 
 // Version information for an assembly consists of the following four values:
 //
