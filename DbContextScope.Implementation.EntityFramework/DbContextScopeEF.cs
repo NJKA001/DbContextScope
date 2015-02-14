@@ -14,7 +14,7 @@ using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 using DbContextScope.Core;
 
-namespace DbContextScope.EntityFramework
+namespace DbContextScope.Implementation.EntityFramework
 {
 
     public class EFDbContextScope : DbContextScope

@@ -67,9 +67,9 @@
       <Project>{90d4492b-abd8-4fe6-9f15-44acaffd8828}</Project>
       <Name>DbContextScope.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DbContextScope.EntityFramework.Implementation\DbContextScope.EntityFramework.Implementation.csproj">
+    <ProjectReference Include="..\DbContextScope.Implementation.EntityFramework\DbContextScope.Implementation.EntityFramework.csproj">
       <Project>{bcd94cfb-8286-4bd1-8d88-c34c0c48c9ec}</Project>
-      <Name>DbContextScope.EntityFramework.Implementation</Name>
+      <Name>DbContextScope.Implementation.EntityFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\DbContextScope.Implementation\DbContextScope.Implementation.csproj">
       <Project>{C61ED263-AAC6-47B8-A83F-CD97A4547AF3}</Project>

@@ -8,7 +8,7 @@
 using System.Data;
 using DbContextScope.Core;
 
-namespace DbContextScope.EntityFramework
+namespace DbContextScope.Implementation
 {
     internal class DbContextReadOnlyScope : IDataContextReadOnlyScope
     {

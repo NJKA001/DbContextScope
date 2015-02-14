@@ -9,7 +9,7 @@ using System;
 using System.Data;
 using DbContextScope.Core;
 
-namespace DbContextScope.EntityFramework
+namespace DbContextScope.Implementation
 {
     public abstract class DbContextScopeFactory<TDbContextScope> : IDbContextScopeFactory where TDbContextScope : DbContextScope, new()
     {

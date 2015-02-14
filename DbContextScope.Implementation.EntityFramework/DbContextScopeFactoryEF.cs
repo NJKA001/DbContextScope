@@ -7,8 +7,8 @@
  */
 
 using DbContextScope.Core;
- 
-namespace DbContextScope.EntityFramework
+
+namespace DbContextScope.Implementation.EntityFramework
 {
     public class DbContextScopeFactoryEF : DbContextScopeFactory<EFDbContextScope>
     {

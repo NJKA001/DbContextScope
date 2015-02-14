@@ -15,9 +15,8 @@ using System.Runtime.Remoting.Messaging;
 using System.Threading;
 using System.Threading.Tasks;
 using DbContextScope.Core;
-using DbContextScope.DbContextScope;
 
-namespace DbContextScope.EntityFramework
+namespace DbContextScope.Implementation
 {
 
     public abstract class DbContextScope : IDbContextScope

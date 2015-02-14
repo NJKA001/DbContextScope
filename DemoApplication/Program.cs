@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
-using DbContextScope.Core;
-using DbContextScope.EntityFramework;
+using DbContextScope.Implementation;
+using DbContextScope.Implementation.EntityFramework;
 using Numero3.EntityFramework.Demo.BusinessLogicServices;
 using Numero3.EntityFramework.Demo.CommandModel;
 using Numero3.EntityFramework.Demo.DatabaseContext;

@@ -13,12 +13,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using DbContextScope.Core;
 
-namespace DbContextScope.DbContextScope
+namespace DbContextScope.Implementation
 {
 
 
     /// <summary>
-    /// As its name suggests, IDbContextCollection maintains a collection of IDbContext instances.
+    /// As its name suggests, DbContextCollection maintains a collection of IDbContext instances.
     /// 
     /// What it does in a nutshell:
     /// - Lazily instantiates IDbContext instances when its Get Of TIDbContext () method is called

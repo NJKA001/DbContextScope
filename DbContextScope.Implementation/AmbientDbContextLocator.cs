@@ -7,7 +7,7 @@
  */
 using DbContextScope.Core;
 
-namespace DbContextScope.EntityFramework
+namespace DbContextScope.Implementation
 {
     public class AmbientDbContextLocator : IAmbientDbContextLocator
     {
